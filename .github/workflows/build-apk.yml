@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 permissions:
@@ -13,63 +12,47 @@ permissions:
 
 jobs:
   build:
-    name: Build Naxira APK
+    name: Build Naxira Android APK
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Download source code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Setup Java
-      - name: Setup Java JDK
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      # 3. Setup Gradle
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          accept-android-sdk-licenses: true
+          log-accepted-android-sdk-licenses: false
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '9.3.1'
+          gradle-version: '8.13'
 
-      # 4. Setup Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # 5. Accept Android SDK licenses
-      - name: Accept Android SDK Licenses
-        shell: bash
+      - name: Check Project
         run: |
-          yes | sdkmanager --licenses
-
-      # 6. Check Android SDK
-      - name: Check Android SDK
-        run: |
-          echo "Android SDK: $ANDROID_HOME"
-          sdkmanager --list_installed
-
-      # 7. Check project files
-      - name: Check Project Structure
-        run: |
-          echo "Checking Android project..."
+          echo "Checking project files..."
           ls -la
           ls -la app
+          find app -name AndroidManifest.xml
 
-      # 8. Build Debug APK
-      - name: Build Android APK
-        shell: bash
+      - name: Build Debug APK
         run: |
           if [ -f "./gradlew" ]; then
             chmod +x ./gradlew
-            ./gradlew :app:assembleDebug
+            ./gradlew :app:assembleDebug --no-daemon
           else
-            gradle :app:assembleDebug
+            gradle :app:assembleDebug --no-daemon
           fi
 
-      # 9. Upload APK
-      - name: Upload Naxira APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Naxira-Android-APK
@@ -77,9 +60,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-      # 10. Build summary
-      - name: Build Summary
+      - name: Build Success
         if: success()
         run: |
-          echo "## Naxira APK Build Successful!" >> $GITHUB_STEP_SUMMARY
-          echo "Your APK is ready to download." >> $GITHUB_STEP_SUMMARY
+          echo "Naxira APK generated successfully!"
