@@ -1,0 +1,6 @@
+{
+  "name": "Naxira",
+  "description": "Naxira Business Manager: Digital agency ERP, Indian GST invoicing, Khatabook digital ledger, CRM, and project management suite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

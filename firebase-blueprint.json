@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Naxira Business Manager Schema",
+  "type": "object",
+  "entities": {
+    "business_profile": {
+      "path": "/users/{userId}/settings/business_profile",
+      "properties": {
+        "userId": { "type": "string" },
+        "agencyName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "website": { "type": "string" },
+        "address": { "type": "string" },
+        "gstin": { "type": "string" },
+        "pan": { "type": "string" },
+        "bankName": { "type": "string" },
+        "bankAccount": { "type": "string" },
+        "bankIfsc": { "type": "string" },
+        "upiId": { "type": "string" },
+        "invoicePrefix": { "type": "string" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "agencyName"]
+    },
+    "client": {
+      "path": "/users/{userId}/clients/{clientId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "contactPerson": { "type": "string" },
+        "phone": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "pinCode": { "type": "string" },
+        "gstin": { "type": "string" },
+        "category": { "type": "string" },
+        "notes": { "type": "string" },
+        "totalBilled": { "type": "number" },
+        "totalPaid": { "type": "number" },
+        "balanceDue": { "type": "number" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "name"]
+    },
+    "lead": {
+      "path": "/users/{userId}/leads/{leadId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "clientName": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "email": { "type": "string" },
+        "source": { "type": "string" },
+        "dealValue": { "type": "number" },
+        "status": { "type": "string" },
+        "followUpDate": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "title", "clientName", "status"]
+    },
+    "invoice": {
+      "path": "/users/{userId}/invoices/{invoiceId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "clientId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "clientGstin": { "type": "string" },
+        "clientAddress": { "type": "string" },
+        "invoiceDate": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "taxType": { "type": "string" },
+        "taxAmount": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "balanceDue": { "type": "number" },
+        "status": { "type": "string" },
+        "paymentNotes": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "invoiceNumber", "clientId", "grandTotal", "status"]
+    },
+    "quotation": {
+      "path": "/users/{userId}/quotations/{quoteId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "quoteNumber": { "type": "string" },
+        "clientId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "taxAmount": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "validUntil": { "type": "string" },
+        "terms": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "quoteNumber", "clientId", "grandTotal", "status"]
+    },
+    "payment": {
+      "path": "/users/{userId}/payments/{paymentId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "clientId": { "type": "string" },
+        "invoiceId": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "referenceNumber": { "type": "string" },
+        "paymentDate": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "clientId", "amount", "paymentMethod"]
+    },
+    "ledger": {
+      "path": "/users/{userId}/ledger/{ledgerId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "clientId": { "type": "string" },
+        "invoiceId": { "type": "string" },
+        "entryType": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "referenceNumber": { "type": "string" },
+        "description": { "type": "string" },
+        "runningBalance": { "type": "number" },
+        "entryDate": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "clientId", "entryType", "amount"]
+    },
+    "expense": {
+      "path": "/users/{userId}/expenses/{expenseId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "category": { "type": "string" },
+        "title": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "vendor": { "type": "string" },
+        "notes": { "type": "string" },
+        "expenseDate": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "category", "title", "amount"]
+    },
+    "project": {
+      "path": "/users/{userId}/projects/{projectId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "clientId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "projectName": { "type": "string" },
+        "category": { "type": "string" },
+        "budget": { "type": "number" },
+        "startDate": { "type": "string" },
+        "deadline": { "type": "string" },
+        "status": { "type": "string" },
+        "progressPercentage": { "type": "number" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "projectName", "clientId", "status"]
+    },
+    "service": {
+      "path": "/users/{userId}/services/{serviceId}",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "basePrice": { "type": "number" },
+        "defaultTaxRate": { "type": "number" },
+        "billingCycle": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "title", "basePrice"]
+    }
+  }
+}
