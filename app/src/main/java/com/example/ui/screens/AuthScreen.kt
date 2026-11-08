@@ -189,7 +189,14 @@ fun AuthScreen(
                     errorMessage = null
                     coroutineScope.launch {
                         try {
-                            val clientId = context.getString(R.string.default_web_client_id)
+                            val clientIdRes = context.resources.getIdentifier(
+    "default_web_client_id", "string", context.packageName
+)
+if (clientIdRes == 0) {
+    errorMessage = "Google Sign-In is not configured. Add google-services.json to the app/ folder."
+    return@launch
+}
+val clientId = context.getString(clientIdRes)
                             val signInOption = GetSignInWithGoogleOption.Builder(serverClientId = clientId).build()
                             val request = GetCredentialRequest.Builder().addCredentialOption(signInOption).build()
 
